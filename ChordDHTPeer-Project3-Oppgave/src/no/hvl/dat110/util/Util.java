@@ -42,10 +42,19 @@ public class Util {
 		// it modifies 'upper' and 'id' when lower > upper e.g. set (6, 2) in mod 10 = {6, 7, 8, 9, 0, 1, 2}
 		
 		// implement: read the descriptions above
-		boolean cond = false;
-
+		BigInteger size = Hash.addressSize();
+		BigInteger upperM = upper.mod(size);
+		BigInteger idM = id.mod(size);
+		BigInteger lowerM = lower.mod(size);
 		
-		return cond;
+		if (upperM.compareTo(lowerM) < 0) { 
+            return ((lowerM.compareTo(idM) <= 0 && size.compareTo(idM) >= 0) || (BigInteger.valueOf(0).compareTo(idM) <= 0 && upperM.compareTo(idM) >= 0));
+        }
+		if (upperM.compareTo(lowerM) > 0){
+            return (lowerM.compareTo(idM) <= 0 && upperM.compareTo(idM) > 0);
+        } 
+		return lowerM.compareTo(idM) == 0;
+        
 	}
 	
 	public static List<String> toString(List<NodeInterface> list) throws RemoteException {
